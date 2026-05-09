@@ -403,19 +403,30 @@ section { padding: 100px 5%; }
   padding: 4px 10px; border-radius: 100px;
 }
 .product-img {
-  width: 100%; aspect-ratio: 1/1; object-fit: cover;
-  background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+  width: 100%; aspect-ratio: 1/1;
+  background: #0f0f0f;
   display: flex; align-items: center; justify-content: center;
-  font-size: 80px; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
   overflow: hidden; position: relative;
 }
-.product-card:hover .product-img { transform: scale(1.04); }
-.product-img-glow {
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at center, rgba(200,169,110,0.08) 0%, transparent 70%);
-  opacity: 0; transition: opacity 0.4s;
+.product-img img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+  display: block; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  filter: brightness(0.88) saturate(1.1);
 }
-.product-card:hover .product-img-glow { opacity: 1; }
+.product-card:hover .product-img img {
+  transform: scale(1.07);
+  filter: brightness(0.95) saturate(1.2);
+}
+.product-img-glow {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to top, rgba(10,10,10,0.55) 0%, transparent 55%),
+              radial-gradient(circle at center, rgba(200,169,110,0.12) 0%, transparent 70%);
+  opacity: 1; transition: opacity 0.4s;
+}
+.product-card:hover .product-img-glow {
+  background: linear-gradient(to top, rgba(10,10,10,0.35) 0%, transparent 50%),
+              radial-gradient(circle at center, rgba(200,169,110,0.2) 0%, transparent 70%);
+}
 .product-info { padding: 20px; }
 .product-brand { font-size: 11px; color: var(--gold); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
 .product-name { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
@@ -1216,14 +1227,30 @@ footer {
 <script>
 // ── Products Data ──
 const products = [
-  { id:1, name:'Lost Mary BM20000', brand:'Lost Mary', cat:'lost-mary', emoji:'💨', price:'KES 2,500', puffs:'20,000', flavors:['Watermelon Ice','Blueberry','Mango'], ribbon:'Best Seller', inStock:true },
-  { id:2, name:'Lost Mary OS5000', brand:'Lost Mary', cat:'lost-mary', emoji:'🌊', price:'KES 1,400', puffs:'5,000', flavors:['Strawberry Ice','Peach Mango'], ribbon:'', inStock:true },
-  { id:3, name:'Elf Bar BC5000', brand:'Elf Bar', cat:'elf-bar', emoji:'⚡', price:'KES 1,350', puffs:'5,000', flavors:['Watermelon Ice','Cool Mint','Blue Razz'], ribbon:'Popular', inStock:true },
-  { id:4, name:'Elf Bar TE6000', brand:'Elf Bar', cat:'elf-bar', emoji:'🔵', price:'KES 1,600', puffs:'6,000', flavors:['Grape Ice','Berry Mix'], ribbon:'', inStock:true },
-  { id:5, name:'Geek Bar Pulse 9000', brand:'Geek Bar', cat:'geek-bar', emoji:'🟢', price:'KES 1,900', puffs:'9,000', flavors:['Tropical Punch','Peach Ice','Mint'], ribbon:'New Arrival', inStock:true },
-  { id:6, name:'RandM Tornado 10000', brand:'RandM', cat:'randm', emoji:'🌪️', price:'KES 1,750', puffs:'10,000', flavors:['Mixed Berry','Kiwi Ice'], ribbon:'', inStock:true },
-  { id:7, name:'Lost Mary MO20000', brand:'Lost Mary', cat:'lost-mary', emoji:'🍇', price:'KES 2,800', puffs:'20,000', flavors:['Grape Ice','Watermelon'], ribbon:'Premium', inStock:false },
-  { id:8, name:'Geek Bar Skyview', brand:'Geek Bar', cat:'geek-bar', emoji:'🌸', price:'KES 2,100', puffs:'25,000', flavors:['Lychee Ice','Cherry Lemon'], ribbon:'Hot', inStock:true },
+  { id:1, name:'Lost Mary BM20000', brand:'Lost Mary', cat:'lost-mary',
+    img:'https://picsum.photos/seed/lostmary1/600/600',
+    price:'KES 2,500', puffs:'20,000', flavors:['Watermelon Ice','Blueberry','Mango'], ribbon:'Best Seller', inStock:true },
+  { id:2, name:'Lost Mary OS5000', brand:'Lost Mary', cat:'lost-mary',
+    img:'https://picsum.photos/seed/lostmary2/600/600',
+    price:'KES 1,400', puffs:'5,000', flavors:['Strawberry Ice','Peach Mango'], ribbon:'', inStock:true },
+  { id:3, name:'Elf Bar BC5000', brand:'Elf Bar', cat:'elf-bar',
+    img:'https://picsum.photos/seed/elfbar1/600/600',
+    price:'KES 1,350', puffs:'5,000', flavors:['Watermelon Ice','Cool Mint','Blue Razz'], ribbon:'Popular', inStock:true },
+  { id:4, name:'Elf Bar TE6000', brand:'Elf Bar', cat:'elf-bar',
+    img:'https://picsum.photos/seed/elfbar2/600/600',
+    price:'KES 1,600', puffs:'6,000', flavors:['Grape Ice','Berry Mix'], ribbon:'', inStock:true },
+  { id:5, name:'Geek Bar Pulse 9000', brand:'Geek Bar', cat:'geek-bar',
+    img:'https://picsum.photos/seed/geekbar1/600/600',
+    price:'KES 1,900', puffs:'9,000', flavors:['Tropical Punch','Peach Ice','Mint'], ribbon:'New Arrival', inStock:true },
+  { id:6, name:'RandM Tornado 10000', brand:'RandM', cat:'randm',
+    img:'https://picsum.photos/seed/randm10k/600/600',
+    price:'KES 1,750', puffs:'10,000', flavors:['Mixed Berry','Kiwi Ice'], ribbon:'', inStock:true },
+  { id:7, name:'Lost Mary MO20000 Pro', brand:'Lost Mary', cat:'lost-mary',
+    img:'https://picsum.photos/seed/lostmary3/600/600',
+    price:'KES 2,800', puffs:'20,000', flavors:['Grape Ice','Watermelon'], ribbon:'Premium', inStock:false },
+  { id:8, name:'Geek Bar Skyview 25K', brand:'Geek Bar', cat:'geek-bar',
+    img:'https://picsum.photos/seed/geekbar25/600/600',
+    price:'KES 2,100', puffs:'25,000', flavors:['Lychee Ice','Cherry Lemon'], ribbon:'Hot', inStock:true },
 ];
 
 let currentFilter = 'all';
@@ -1234,10 +1261,12 @@ function renderProducts(data){
   grid.innerHTML = data.length ? data.map(p => `
     <div class="product-card" data-cat="${p.cat}">
       ${p.ribbon ? `<div class="product-ribbon">${p.ribbon}</div>`:''}
-      ${p.inStock ? `<div class="product-stock">In Stock</div>`:`<div class="product-stock" style="color:#888;border-color:#888;background:rgba(255,255,255,0.05);">Low Stock</div>`}
+      ${p.inStock
+        ? `<div class="product-stock">In Stock</div>`
+        : `<div class="product-stock" style="color:#888;border-color:#888;background:rgba(255,255,255,0.05);">Low Stock</div>`}
       <div class="product-img">
         <div class="product-img-glow"></div>
-        <span style="font-size:90px;line-height:1;">${p.emoji}</span>
+        <img src="${p.img}" alt="${p.name}" loading="lazy" />
       </div>
       <div class="product-info">
         <div class="product-brand">${p.brand}</div>
