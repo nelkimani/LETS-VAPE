@@ -81,7 +81,7 @@ button { font-family: 'DM Sans', sans-serif; }
 }
 .nav-logo {
   display: flex; align-items: center; gap: 9px;
-  text-decoration: none;
+  text-decoration: none; color: var(--white);
 }
 .nav-logo-icon {
   width: 34px; height: 34px;
@@ -89,16 +89,16 @@ button { font-family: 'DM Sans', sans-serif; }
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   font-size: 17px; font-family: 'Playfair Display', serif;
-  color: var(--black); font-weight: 900;
+  color: #0A0A0A !important; font-weight: 900;
   box-shadow: 0 0 16px var(--gold-glow);
   flex-shrink: 0;
 }
 .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
-.nav-logo-text span:first-child {
-  font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--white);
+.nav-logo-text .logo-name {
+  font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: #F5F3EE !important;
 }
-.nav-logo-text span:last-child {
-  font-size: 9px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+.nav-logo-text .logo-country {
+  font-size: 9px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: #C8A96E !important;
 }
 
 /* Desktop nav links — hidden on mobile */
@@ -849,9 +849,202 @@ footer {
 @media(prefers-reduced-motion:reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ── AGE GATE MODAL ── */
+.age-gate-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(5,5,5,0.92);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 1; transition: opacity 0.5s ease;
+}
+.age-gate-overlay.hidden {
+  opacity: 0; pointer-events: none;
+}
+.age-gate-modal {
+  background: var(--black-card);
+  border: 1px solid rgba(200,169,110,0.25);
+  border-radius: 24px;
+  padding: 40px 32px;
+  max-width: 480px; width: 100%;
+  text-align: center;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 60px rgba(200,169,110,0.06);
+  position: relative;
+  animation: modal-rise 0.45s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes modal-rise {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.age-gate-logo {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-bottom: 24px;
+}
+.age-gate-logo-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900;
+  color: #0A0A0A;
+  box-shadow: 0 0 20px rgba(200,169,110,0.35);
+}
+.age-gate-logo-text { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
+.age-gate-logo-text .logo-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: #F5F3EE; }
+.age-gate-logo-text .logo-country { font-size: 9px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #C8A96E; }
+
+.age-gate-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(200,169,110,0.1); border: 1px solid rgba(200,169,110,0.3);
+  border-radius: 100px; padding: 5px 14px; margin-bottom: 20px;
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold);
+}
+.age-gate-modal h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 5vw, 28px); font-weight: 900;
+  color: var(--white); margin-bottom: 16px; line-height: 1.2;
+}
+.age-gate-modal p {
+  font-size: 14px; color: rgba(245,243,238,0.65); line-height: 1.75;
+  margin-bottom: 28px;
+}
+.age-gate-modal p strong { color: var(--gold); font-weight: 700; }
+.age-gate-divider {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 2px; margin: 0 auto 24px;
+}
+.age-gate-btns {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.btn-age-enter {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #0A0A0A; padding: 16px 24px; border-radius: 100px;
+  font-weight: 800; font-size: 15px; border: none; cursor: pointer;
+  transition: var(--transition); min-height: 54px;
+  box-shadow: 0 8px 28px rgba(200,169,110,0.3);
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-age-enter:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(200,169,110,0.45); }
+.btn-age-exit {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: transparent; color: rgba(245,243,238,0.45);
+  border: 1px solid rgba(245,243,238,0.1); padding: 14px 24px; border-radius: 100px;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: var(--transition); min-height: 48px;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-age-exit:hover { border-color: rgba(245,243,238,0.25); color: rgba(245,243,238,0.7); }
+.age-gate-note {
+  font-size: 11px; color: rgba(245,243,238,0.3); margin-top: 20px;
+  line-height: 1.6;
+}
+
+/* Blocked / under-18 message */
+.age-blocked {
+  position: fixed; inset: 0; z-index: 10001;
+  background: var(--black);
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 32px;
+}
+.age-blocked.show { display: flex; }
+.age-blocked-icon { font-size: 56px; margin-bottom: 24px; }
+.age-blocked h2 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+.age-blocked p { font-size: 15px; color: var(--gray-text); max-width: 360px; line-height: 1.7; }
+
+/* ── PURCHASE CHECKBOX ── */
+.age-confirm-wrap {
+  margin-bottom: 12px;
+}
+.age-confirm-label {
+  display: flex; align-items: flex-start; gap: 10px;
+  cursor: pointer; font-size: 11px; color: rgba(245,243,238,0.55); line-height: 1.5;
+  text-align: left;
+}
+.age-confirm-label input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none;
+  width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
+  border: 1px solid rgba(200,169,110,0.4); border-radius: 4px;
+  background: transparent; cursor: pointer;
+  transition: var(--transition); position: relative;
+}
+.age-confirm-label input[type="checkbox"]:checked {
+  background: var(--gold); border-color: var(--gold);
+}
+.age-confirm-label input[type="checkbox"]:checked::after {
+  content: '✓'; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 11px; font-weight: 900; color: #0A0A0A;
+}
+.age-confirm-error {
+  font-size: 11px; color: #ff6b6b; margin-bottom: 8px;
+  display: none; text-align: left; padding-left: 28px;
+}
+.age-confirm-error.show { display: block; }
+
+/* ── HEALTH DISCLAIMER ── */
+.health-disclaimer-footer {
+  background: rgba(200,169,110,0.04); border: 1px solid rgba(200,169,110,0.1);
+  border-radius: 10px; padding: 16px 20px; margin-bottom: 28px;
+}
+.health-disclaimer-footer p {
+  font-size: 11px; color: rgba(245,243,238,0.38); line-height: 1.7;
+}
+.health-disclaimer-footer p strong { color: rgba(200,169,110,0.6); }
+
+.product-health-note {
+  font-size: 10px; color: rgba(136,136,136,0.7);
+  text-align: center; margin-top: 8px; letter-spacing: 0.5px;
+}
+
+/* Age badge on age-restricted section header */
+.age-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(200,169,110,0.08); border: 1px solid rgba(200,169,110,0.2);
+  border-radius: 100px; padding: 3px 10px;
+  font-size: 10px; font-weight: 700; color: rgba(200,169,110,0.7);
+  letter-spacing: 1px; text-transform: uppercase; margin-left: 8px;
+  vertical-align: middle;
+}
 </style>
 </head>
 <body>
+
+<!-- ── AGE GATE MODAL ── -->
+<div class="age-gate-overlay" id="ageGate" role="dialog" aria-modal="true" aria-labelledby="ageGateTitle">
+  <div class="age-gate-modal">
+    <div class="age-gate-logo">
+      <div class="age-gate-logo-icon">V</div>
+      <div class="age-gate-logo-text">
+        <span class="logo-name">Let's Vape</span>
+        <span class="logo-country">Kenya</span>
+      </div>
+    </div>
+    <div class="age-gate-badge">🔞 Age Restricted</div>
+    <h2 id="ageGateTitle">Age Restricted<br>Products</h2>
+    <div class="age-gate-divider"></div>
+    <p>Let's Vape Kenya sells vaping products intended only for adults of legal smoking age. By entering this website, you confirm that you are <strong>18 years of age or older</strong> and legally permitted to purchase vaping products in your jurisdiction.</p>
+    <div class="age-gate-btns">
+      <button class="btn-age-enter" id="btnEnter" onclick="ageVerify(true)">
+        ✓ &nbsp;I Am 18+ — Enter Site
+      </button>
+      <button class="btn-age-exit" id="btnExit" onclick="ageVerify(false)">
+        I Am Under 18 — Exit
+      </button>
+    </div>
+    <p class="age-gate-note">Your age confirmation is stored securely for 30 days.<br>Vaping products contain nicotine, an addictive substance.</p>
+  </div>
+</div>
+
+<!-- ── UNDER-18 BLOCKED SCREEN ── -->
+<div class="age-blocked" id="ageBlocked" role="alert">
+  <div class="age-blocked-icon">🚫</div>
+  <h2>Access Restricted</h2>
+  <p>You must be 18 years or older to access this website. This site sells age-restricted nicotine products.</p>
+</div>
 
 <!-- LOADER -->
 <div class="loader" id="loader">
@@ -867,8 +1060,8 @@ footer {
   <a href="#home" class="nav-logo">
     <div class="nav-logo-icon">V</div>
     <div class="nav-logo-text">
-      <span>Let's Vape</span>
-      <span>Kenya</span>
+      <span class="logo-name">Let's Vape</span>
+      <span class="logo-country">Kenya</span>
     </div>
   </a>
   <ul class="nav-links">
@@ -894,8 +1087,8 @@ footer {
     <a href="#home" class="nav-logo" onclick="closeDrawer()">
       <div class="nav-logo-icon">V</div>
       <div class="nav-logo-text">
-        <span>Let's Vape</span>
-        <span>Kenya</span>
+        <span class="logo-name">Let's Vape</span>
+        <span class="logo-country">Kenya</span>
       </div>
     </a>
     <button class="drawer-close" onclick="closeDrawer()" aria-label="Close menu">✕</button>
@@ -1021,7 +1214,7 @@ footer {
 <section class="products-section" id="products">
   <div class="section-header reveal">
     <span class="section-label">✦ Our Collection</span>
-    <h2 class="section-title">Premium <span>Products</span></h2>
+    <h2 class="section-title">Premium <span>Products</span> <span class="age-badge">18+ Only</span></h2>
     <p class="section-sub">Authentic, sealed, and delivered fresh — the finest vape selection in Kenya.</p>
   </div>
   <div class="filter-tabs" id="filterTabs">
@@ -1294,16 +1487,34 @@ footer {
       <div class="nav-logo" style="display:inline-flex;">
         <div class="nav-logo-icon">V</div>
         <div class="nav-logo-text">
-          <span>Let's Vape</span>
-          <span>Kenya</span>
+          <span class="logo-name">Let's Vape</span>
+          <span class="logo-country">Kenya</span>
         </div>
       </div>
       <p>Kenya's most trusted premium vape supplier. Authentic products, lightning-fast delivery, and unmatched wholesale support.</p>
       <div class="social-links">
-        <a href="#" class="social-link" aria-label="Facebook">📘</a>
-        <a href="https://www.instagram.com/vape28886?igsh=MTdyZm1lZnJ3Y2NsNw==" class="social-link" target="_blank" rel="noopener" aria-label="Instagram">📸</a>
-        <a href="#" class="social-link" aria-label="Twitter">🐦</a>
-        <a href="https://wa.me/254796622832" class="social-link" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+        <a href="#" class="social-link" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/vape28886?igsh=MTdyZm1lZnJ3Y2NsNw==" class="social-link" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="#" class="social-link" aria-label="Twitter / X">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+        <a href="https://wa.me/254796622832" class="social-link" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+          </svg>
+        </a>
       </div>
     </div>
     <div class="footer-cols">
@@ -1336,6 +1547,9 @@ footer {
         </div>
       </div>
     </div>
+  </div>
+  <div class="health-disclaimer-footer">
+    <p><strong>Health Warning:</strong> Vaping products contain nicotine, which is an addictive substance. These products are intended for adult smokers and vapers aged 18 years and above. Non-smokers, pregnant or breastfeeding women, and individuals with certain medical conditions should not use nicotine products.</p>
   </div>
   <div class="footer-bottom">
     <span>© 2025 Let's Vape Kenya. All rights reserved.</span>
@@ -1402,10 +1616,18 @@ function renderProducts(data) {
           <div class="product-price">${p.price}</div>
           <div class="product-puffs">💨 ${p.puffs}</div>
         </div>
+        <div class="age-confirm-wrap">
+          <label class="age-confirm-label">
+            <input type="checkbox" class="age-checkbox" aria-label="Age confirmation">
+            I confirm I am 18+ and legally permitted to buy vaping products.
+          </label>
+          <div class="age-confirm-error">Please confirm your age before ordering.</div>
+        </div>
         <a href="https://wa.me/254796622832?text=Hi!%20I'd%20like%20to%20order%20${encodeURIComponent(p.name)}%20-%20${encodeURIComponent(p.price)}"
-           class="btn-wa-order" target="_blank" rel="noopener">
+           class="btn-wa-order" target="_blank" rel="noopener" onclick="return checkAgeBox(this)">
           💬 Order on WhatsApp
         </a>
+        <div class="product-health-note">🔞 18+ Only · Nicotine is addictive.</div>
       </div>
     </div>
   `).join('');
@@ -1564,6 +1786,72 @@ window.addEventListener('load', () => {
     document.getElementById('loader').classList.add('hidden');
   }, 1400);
 });
+
+// ── AGE VERIFICATION ──
+const AGE_KEY = 'lvk_age_verified';
+const AGE_DAYS = 30;
+
+function ageIsVerified() {
+  try {
+    const stored = localStorage.getItem(AGE_KEY);
+    if (!stored) return false;
+    const { ts } = JSON.parse(stored);
+    const expired = Date.now() - ts > AGE_DAYS * 24 * 60 * 60 * 1000;
+    if (expired) { localStorage.removeItem(AGE_KEY); return false; }
+    return true;
+  } catch { return false; }
+}
+
+function ageVerify(isAdult) {
+  if (isAdult) {
+    try { localStorage.setItem(AGE_KEY, JSON.stringify({ ts: Date.now() })); } catch {}
+    const overlay = document.getElementById('ageGate');
+    overlay.classList.add('hidden');
+    document.body.style.overflow = '';
+    setTimeout(() => overlay.style.display = 'none', 500);
+  } else {
+    document.getElementById('ageGate').style.display = 'none';
+    document.getElementById('ageBlocked').classList.add('show');
+  }
+}
+
+function checkAgeBox(linkEl) {
+  const card = linkEl.closest('.product-card');
+  const checkbox = card.querySelector('.age-checkbox');
+  const errorEl = card.querySelector('.age-confirm-error');
+  if (!checkbox.checked) {
+    errorEl.classList.add('show');
+    checkbox.focus();
+    // Shake the checkbox label briefly
+    card.querySelector('.age-confirm-label').animate(
+      [{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],
+      {duration:300, iterations:2}
+    );
+    return false; // Prevent navigation
+  }
+  errorEl.classList.remove('show');
+  return true; // Allow link to proceed
+}
+
+// Trap focus inside modal
+document.getElementById('ageGate').addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab') return;
+  const focusable = document.querySelectorAll('#ageGate button');
+  const first = focusable[0], last = focusable[focusable.length - 1];
+  if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } }
+  else { if (document.activeElement === last) { e.preventDefault(); first.focus(); } }
+});
+
+// Init: show or skip age gate
+(function initAgeGate() {
+  if (ageIsVerified()) {
+    const el = document.getElementById('ageGate');
+    el.style.display = 'none';
+  } else {
+    document.body.style.overflow = 'hidden';
+    document.getElementById('btnEnter').focus();
+  }
+})();
 </script>
 </body>
 </html>
